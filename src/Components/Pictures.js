@@ -1,19 +1,20 @@
 import React from 'react';
-import Picture from './Picture';
+import NavBar from './NavBar';
+
 
 const Pictures = (props) => {
     console.log(props);
     let pictures = props.pictures.pics.map((pic) => {
         let imgSrc = `https://farm${pic.farm}.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}.jpg`
-        return <img src={imgSrc} alt={pic.id} />
+        return <li><img src={imgSrc} alt={pic.id} /></li>
     });
 
     return (
-    <div>
-        <p>Loading is: {props.pictures.loading.toString()}</p>
-        <div>
+    <div className="photo-container">
+    <NavBar />
+        <ul>
             {pictures}
-        </div>
+        </ul>
     </div>
     );
 }
