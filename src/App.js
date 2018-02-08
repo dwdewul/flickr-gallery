@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import SearchForm from './Components/SearchForm';
 import Pictures from './Components/Pictures';
+import NavBar from './Components/NavBar';
 
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import apiConfig from './config';
@@ -12,12 +12,17 @@ class App extends Component {
   state = {
     pics: [],
     loading: true,
-    queryString: 'dogs'
+    queryString: window.location.pathname.split('/')[1] || "dogs"
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.performSearch(this.state.queryString);
+  }
+
+  handleDefaultOptions(query) {
+    this.setState({ queryString: query });
+    this.performSearch(query);
   }
 
   getQueryString(e) {
@@ -34,7 +39,6 @@ class App extends Component {
             pics: response.data.photos.photo,
             loading: false 
           });
-          console.log(response.data.photos.photo);
         })
         .catch(err => {
           console.log('There was an error loading photo data', err);
@@ -48,11 +52,48 @@ class App extends Component {
   render() {
     return (
       <div>
-          <SearchForm 
-            onSearch={e => this.handleSubmit(e)}
-            onType={e => this.getQueryString(e)}
-          />
-          <Pictures pictures={this.state} />
+          <BrowserRouter>
+            <div>
+              <Switch>
+                <Route exact path="/" render={() => (
+                  <div>
+                    <NavBar handleDefault={(q) => this.handleDefaultOptions(q)} />
+                    <Pictures pictures={this.state} />
+                  </div>
+                  )} 
+                />
+                <Route exact path="/search" render={() => (
+                  <div>
+                  <SearchForm 
+                    onSearch={e => this.handleSubmit(e)}
+                    onType={(e, p) => this.getQueryString(e, p)}
+                  />
+                  <NavBar handleDefault={(q) => this.handleDefaultOptions(q)} />
+                  <Pictures pictures={this.state} />
+                  </div>
+                )}
+                />
+                <Route exact path="/cat" render={() => (
+                  <div>
+                    <NavBar handleDefault={(q) => this.handleDefaultOptions(q)} />
+                    <Pictures pictures={this.state} />
+                  </div>
+                  )} />
+                <Route exact path="/dog" render={() => (
+                  <div>
+                    <NavBar handleDefault={(q) => this.handleDefaultOptions(q)} />
+                    <Pictures pictures={this.state} />
+                  </div>
+                  )} />
+                <Route exact path="/coffee" render={() => (
+                  <div>
+                    <NavBar handleDefault={(q) => this.handleDefaultOptions(q)} />
+                    <Pictures pictures={this.state} />
+                  </div>
+                  )} />
+              </Switch>
+            </div>
+          </BrowserRouter>
       </div>
     );
   }

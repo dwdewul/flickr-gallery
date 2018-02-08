@@ -2,13 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 
-const NavBar = () => {
+const NavBar = (props) => {
     return (
         <nav className="main-nav">
             <ul>
-                <li><a href="/cat">Cats</a></li>
-                <li><a href="/cat">Dogs</a></li>
-                <li><a href="/cat">Coffee</a></li>
+                <li><NavLink to="/search">Search</NavLink></li>
+                <li onClick={(q) => props.handleDefault("cat")}><NavLink to="/cat">Cat</NavLink></li>
+                <li onClick={(q) => props.handleDefault("dog")}><NavLink to="/dog">Dog</NavLink></li>
+                <li onClick={(q) => props.handleDefault("coffee")}><NavLink to="/coffee">Coffee</NavLink></li>
             </ul>
         </nav>
     );

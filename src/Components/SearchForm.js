@@ -9,7 +9,7 @@ const SearchForm = props => {
             placeholder="Search..."
             onChange={(e) => props.onType(e)}
             />
-            <button type="submit"><i class="fas fa-search fa-lg"></i></button>
+            <button type="submit"><i className="fas fa-search fa-lg"></i></button>
           </form>
         </div>
     );
