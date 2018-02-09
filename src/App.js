@@ -66,7 +66,7 @@ class App extends Component {
                   <div>
                   <SearchForm 
                     onSearch={e => this.handleSubmit(e)}
-                    onType={(e, p) => this.getQueryString(e, p)}
+                    onType={(e) => this.getQueryString(e)}
                   />
                   <NavBar handleDefault={(q) => this.handleDefaultOptions(q)} />
                   <Pictures pictures={this.state} />
